@@ -1,0 +1,102 @@
+import BpmnModeler from 'https://cdn.jsdelivr.net/npm/bpmn-js@18.14.0/lib/Modeler.js/+esm';
+import BpmnJSAntd from '../dist/index.esm.js';
+import fileDrop from 'https://cdn.jsdelivr.net/npm/file-drops@0.7.0/+esm';
+import download from 'https://cdn.jsdelivr.net/npm/downloadjs@1.4.7/download.js/+esm';
+
+let file = { name: 'diagram.bpmn' };
+
+// modeler instance
+const bpmnEditor = new BpmnModeler({
+  container: '#canvas',
+  textRenderer: {
+    defaultStyle: {
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+      fontWeight: 'normal',
+      fontSize: 14,
+      lineHeight: 1.5714
+    },
+    externalStyle: {
+      fontSize: 12,
+      lineHeight: 1.5714
+    }
+  },
+  antdRenderer: {
+    theme: {
+      // Override any theme token here
+    }
+  },
+  additionalModules: [
+    BpmnJSAntd
+  ]
+});
+
+/**
+ * Save diagram contents and print them to the console.
+ */
+function downloadSVG() {
+  bpmnEditor.saveSVG()
+    .then(({ svg }) => {
+      return download(svg, file.name + '.svg', 'application/xml');
+    })
+    .catch(err => {
+      return console.error('Failed to save SVG', err);
+    });
+}
+
+function downloadBPMN() {
+  bpmnEditor.saveXML({ format: true })
+    .then(({ xml }) => {
+      return download(xml, file.name, 'application/xml');
+    })
+    .catch(err => {
+      console.error('Failed to save XML', err);
+    });
+}
+
+/**
+ * Open diagram in our modeler instance.
+ *
+ * @param {String} bpmnXML diagram to display
+ */
+function openDiagram(bpmnXML) {
+
+  // import diagram
+  bpmnEditor.importXML(bpmnXML)
+    .then(() => {
+
+      // access modeler components
+      const canvas = bpmnEditor.get('canvas');
+
+      // zoom to fit full viewport
+      canvas.zoom('fit-viewport');
+    }).catch(err => {
+
+      console.error('could not import BPMN 2.0 diagram', err);
+    });
+}
+
+// wire save button
+document.querySelector('#download-svg').addEventListener('click', downloadSVG);
+
+// wire save button
+document.querySelector('#download-bpmn').addEventListener('click', downloadBPMN);
+
+const dropHandler = fileDrop('Drop a BPMN diagram', function(files) {
+
+  if (files.length) {
+    file = files[0];
+
+    openDiagram(file.contents);
+  }
+});
+
+document.querySelector('body').addEventListener('dragover', dropHandler);
+
+window.addEventListener('load', function() {
+
+  const defaultDiagramUrl = './resources/pizza-collaboration.bpmn';
+
+  // load external diagram file via AJAX and open it
+  fetch(defaultDiagramUrl).then(r => r.text()).then(openDiagram);
+
+});

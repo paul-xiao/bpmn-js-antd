@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>bpmn-js-antd demo</title>
+
+    <!-- required modeler styles -->
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js/dist/assets/diagram-js.css">
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js/dist/assets/bpmn-js.css">
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js/dist/assets/bpmn-font/css/bpmn.css">
+
+    <!-- Ant Design font stack -->
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+      html, body, #canvas {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      .buttons {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 14px;
+        background: #E6F4FF;
+        border: 1px solid #91CAFF;
+        border-radius: 6px;
+        padding: 8px 16px;
+        color: rgba(0, 0, 0, 0.88);
+      }
+
+      button {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 14px;
+        background: #FFFFFF;
+        border: 1px solid #D9D9D9;
+        border-radius: 6px;
+        padding: 5px 16px;
+        color: rgba(0, 0, 0, 0.88);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      button:hover {
+        color: #1677FF;
+        border-color: #1677FF;
+      }
+
+      button + button {
+        margin-left: 8px;
+      }
+
+      .drop-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        padding: 20px;
+        background: rgba(0,0,0, .3);
+        z-index: 500;
+        text-align: left;
+      }
+
+      .drop-overlay .label {
+        color: #ededed;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font: bold 2em sans-serif ;
+      }
+
+      .drop-overlay .box {
+        border: dashed 5px #ededed;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 90%;
+        height: 90%;
+        transform: translate(-50%, -50%);
+        border-radius: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="canvas"></div>
+
+    <div class="buttons">
+      <button id="download-bpmn">Save BPMN</button>
+      <button id="download-svg">Save as SVG</button>
+    </div>
+
+    <div class="notification">
+      <strong>Hint: </strong> Drop your own diagram to render it in Ant Design style!
+    </div>
+
+    <!-- import map for bare module specifiers in dist ESM build -->
+    <script type="importmap">
+      {
+        "imports": {
+          "min-dash": "https://cdn.jsdelivr.net/npm/min-dash@5.0.0/+esm",
+          "tiny-svg": "https://cdn.jsdelivr.net/npm/tiny-svg@4.1.4/+esm",
+          "min-dom": "https://cdn.jsdelivr.net/npm/min-dom@5.3.0/+esm"
+        }
+      }
+    </script>
+
+    <!-- demo script -->
+    <script src="./index.js" type="module"></script>
+  </body>
+</html>
