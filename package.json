@@ -14,7 +14,8 @@
     "prepublishOnly": "run-s build"
   },
   "keywords": ["bpmn-js", "antd", "ant-design", "renderer"],
-  "author": "",
+  "author": "paul-xiao",
+  "repository": "https://github.com/paul-xiao/bpmn-js-antd",
   "license": "MIT",
   "peerDependencies": {
     "bpmn-js": ">= 11",

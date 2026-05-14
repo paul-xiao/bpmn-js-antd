@@ -1,8 +1,21 @@
 # bpmn-js-antd
 
+
 An [Ant Design](https://ant.design/) style renderer for [bpmn-js](https://github.com/bpmn-io/bpmn-js).
 
 Renders BPMN 2.0 diagrams with clean, professional Ant Design aesthetics: rounded corners, soft shadows, blue-white palette, and the standard Ant Design font stack.
+
+## Demo
+
+Start local static server:
+
+```bash
+npx serve .
+```
+
+Then visit http://localhost:3000/demo/index.html in your browser.
+
+![image](./demo/ScreenShot.png)
 
 ## Installation
 
